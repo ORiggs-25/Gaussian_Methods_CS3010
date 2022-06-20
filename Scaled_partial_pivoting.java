@@ -140,14 +140,22 @@ class Scaled_partial_pivoting
         }
     } // end getMatrix_fromFile
 
-    public int getNumEquations()
-    {
+    /**
+     * Get the number of the equations entered by the user
+     * Nothing is being passed in the variable
+     * @return numbet input
+     */
+    public int getNumEquations() {
         System.out.print("Enter the number in the a set of Linear Equations: ");
         return keyboard.nextInt();
     } // end getNumEquations
 
-    private float[] getHighest_absolutCoefficient(float[][] matrix)
-    {
+    /**
+     * Get the highest of the coefficient in every row
+     * @param inputted matrix
+     * @return the array of the highest coefficeient from each row
+     */
+    private float[] getHighest_absolutCoefficient(float[][] matrix) {
         float[] highestCoefficients = new float[numEquations];  // holds the highest coefficients from each row
         float maxCoefficient;
 
@@ -164,6 +172,14 @@ class Scaled_partial_pivoting
     } // end getHighest_absolutCoefficient
 
 
+    /**
+     * 
+     * @param i
+     * @param highestCoefficients
+     * @param pivotOrder
+     * @param matrix
+     * @return
+     */
     private int get_pivot_row(int i, float[] highestCoefficients, Stack<Integer> pivotOrder, float[][] matrix)
     {
         int pivot_row;      // holds row with the highest ratio
