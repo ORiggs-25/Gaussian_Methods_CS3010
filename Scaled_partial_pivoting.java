@@ -228,12 +228,13 @@ class Scaled_partial_pivoting
 
 
     /**
-     * 
+     * Perform reduced row echelon from with the pivot row remains uncahnged
      * @param i
      * @param pivot_row
      * @param highestCoefficients
      * @param pivotOrder
      * @param matrix
+     * Nothing return
      */
     private void gaussian_Elimination(int i, int pivot_row, float[] highestCoefficients,
                                       Stack<Integer> pivotOrder, float[][] matrix)
@@ -266,9 +267,12 @@ class Scaled_partial_pivoting
     }
 
 
-
-
-
+    /**
+     * Display equations from txt file or console input to matrix form (rows and column)
+     * This also display matrix after performing reduced row echelon.
+     * @param matrix
+     * return Nothing
+     */
     public static void displayMatrix(float[][] matrix) {
         DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
@@ -284,20 +288,29 @@ class Scaled_partial_pivoting
         System.out.println();
     } // end displayMatrix
 
-
+    /**
+     * Create copy of the original matrix
+     * @param target matrix contained copy
+     * @param source matrix contained original matrix
+     */
     public static void cloneMatrix(float[][] target, float[][] source){
         for(int i = 0; i < source.length; i++)
             target[i] = source[i].clone();
     }
 
-    private void backSubstitution(float[][] matrix, Stack<Integer> pivotOrder, float[] solutions)
-    {
+
+    /**
+     * Back subtitute the value into the equation once no more pivot ratios that are being compared
+     * @param matrix
+     * @param pivotOrder
+     * @param solutions
+     */
+    private void backSubstitution(float[][] matrix, Stack<Integer> pivotOrder, float[] solutions) {
         int pivot_row;
         float tempHighest;
 
         // iterates through pivot order
-        for (int i = numEquations - 1; !pivotOrder.empty(); i--)
-        {
+        for (int i = numEquations - 1; !pivotOrder.empty(); i--) {
             // set the latest pivot in the pivotOrder then delete it from stack
             pivot_row = pivotOrder.pop();
             tempHighest = matrix[pivot_row][i];
@@ -305,10 +318,8 @@ class Scaled_partial_pivoting
             solutions[i] = matrix[pivot_row][numEquations] / tempHighest;
 
             // iterate to value in the column
-            for (int j = numEquations - 1; j >= 0; j--)
-            {
-                if (i != j)
-                {
+            for (int j = numEquations - 1; j >= 0; j--) {
+                if (i != j) {
                     solutions[i] -= (matrix[pivot_row][j] / tempHighest) * solutions[j];
                 }
             }
@@ -316,8 +327,15 @@ class Scaled_partial_pivoting
     } // end backSubtitution
 
 
-
-
+    /**
+     * Finding and display solution of the matrix.
+     * to find the solution the pivotal equations are stored in the stack with the first in last out order
+     * then find the augmented matrix by performing row reduce by calling the Gaussian ELimination method
+     * @param matrix
+     * This function doesn't return anything, but it displays the pivot row selected
+     * Each matrix after elimiations are being performed
+     * Then finally, it displays the solution after calling the backsubstitution method
+     */
     public void find_scaled_pivoting (float[][] matrix) {
         float[] highestCoefficients = getHighest_absolutCoefficient(matrix);
         int row_pivot;      // holds the row number as a pivot point
@@ -349,22 +367,22 @@ class Scaled_partial_pivoting
         displaySolution(results);
     }
 
+
+    /**
+     * DisplaySolution in the form
+     * q = , r = , s = , t = , ....etc
+     * @param solutions
+     * return nothing
+     */
     public void displaySolution(float[] solutions){
         // 4 decimal places
         DecimalFormat floatingNumber = new DecimalFormat("#.###");
 
         char ch = 'q';
 
-        for(int i = 0; i < solutions.length; i++)
-        {
+        for(int i = 0; i < solutions.length; i++) {
             System.out.println((char)(i+(int)ch) + " = " + floatingNumber.format(solutions[i]));
         }
         System.out.println();
     } // end displaySolution
-
 }
-
-// need to put comment what each method does
-// need to create a txt document
-// need to test for bigger equation
-// polishing the display
