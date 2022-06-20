@@ -173,12 +173,12 @@ class Scaled_partial_pivoting
 
 
     /**
-     * 
+     * Determine the pivot row by finding the highest ratio
      * @param i
      * @param highestCoefficients
      * @param pivotOrder
      * @param matrix
-     * @return
+     * @return pivot_row, which contains the highest ratio
      */
     private int get_pivot_row(int i, float[] highestCoefficients, Stack<Integer> pivotOrder, float[][] matrix)
     {
@@ -227,6 +227,14 @@ class Scaled_partial_pivoting
     } // end get_pivot_row
 
 
+    /**
+     * 
+     * @param i
+     * @param pivot_row
+     * @param highestCoefficients
+     * @param pivotOrder
+     * @param matrix
+     */
     private void gaussian_Elimination(int i, int pivot_row, float[] highestCoefficients,
                                       Stack<Integer> pivotOrder, float[][] matrix)
     {
